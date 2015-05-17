@@ -36,4 +36,8 @@ isLoading
 		current.dontLoad = 0;
 		current.resetLoad = 0;
 	}
+	if (!current.isLoading && !current.gamePaused)
+	{
+		current.dontLoad = 0;
+	}
 }
