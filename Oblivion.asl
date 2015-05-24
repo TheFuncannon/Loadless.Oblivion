@@ -8,11 +8,16 @@ state("Oblivion")
 start
 {
 	current.dontLoad = 0;
+	current.resetLoad = 0;
 	current.mapTravel = 0;
 }
 isLoading
 {
 	
+	if (current.isLoading && !current.notTalking)
+	{
+		current.resetLoad = 1;
+	}
 	if (current.midSpeech)
 	{	
 		current.dontLoad = 1;
@@ -29,6 +34,7 @@ isLoading
 	if (current.mapTravel == 1 && current.gamePaused && !current.isLoading)
 	{
 		current.dontLoad = 0;
+		current.resetLoad = 0;
 	}
 	if (!current.isLoading && !current.gamePaused)
 	{
