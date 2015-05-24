@@ -29,7 +29,6 @@ isLoading
 	if (current.mapTravel == 1 && current.gamePaused && !current.isLoading)
 	{
 		current.dontLoad = 0;
-		current.resetLoad = 0;
 	}
 	if (!current.isLoading && !current.gamePaused)
 	{
