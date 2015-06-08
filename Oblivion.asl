@@ -11,11 +11,20 @@ start
 {
 	current.dontLoad = 0;
 	current.mapTravel = 0;
+	current.spiesHouse = 0;
 }
 isLoading
 {
 	bool b = (current.isLoading && current.notTalking && current.dontLoad == 0) || current.isWaiting;
-	if (current.spiesScroll == 654430032 && !current.isLoading)
+	if (current.spiesScroll == 654442160)
+	{
+		current.spiesHouse = 1;
+	}
+	if (current.spiesScroll != 654442160 && current.spiesScroll != 654430032)
+	{
+		current.spiesHouse = 0;
+	}
+	if (current.spiesScroll == 654430032 && !current.isLoading && current.spiesHouse == 1)
 	{
 		current.dontLoad = 1;
 	}
@@ -28,7 +37,7 @@ isLoading
 	{
 		current.mapTravel = 1;
 	}
-	if (current.mapTravel == 1 && current.gamePaused && !current.isLoading)
+	if (current.mapTravel == 1 && current.gamePaused && !current.isLoading || (current.notTalking && !current.isLoading && current.dontLoad == 1))
 	{
 		current.dontLoad = 0;
 	}
