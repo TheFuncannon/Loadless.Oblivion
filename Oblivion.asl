@@ -5,29 +5,15 @@ state("Oblivion")
 	bool gamePaused : "Oblivion.exe", 0x07480BC;
 	bool midSpeech : "Oblivion.exe", 0x06E4C08;
 	bool isWaiting : "Oblivion.exe", 0x6BE410;
-	uint spiesScroll : "Oblivion.exe", 0x6DB898;
 }
 start
 {
 	current.dontLoad = 0;
 	current.mapTravel = 0;
-	current.spiesHouse = 0;
 }
 isLoading
 {
 	bool b = (current.isLoading && current.notTalking && current.dontLoad == 0) || current.isWaiting;
-	if (current.spiesScroll == 654442160)
-	{
-		current.spiesHouse = 1;
-	}
-	if (current.spiesScroll != 654442160 && current.spiesScroll != 654430032)
-	{
-		current.spiesHouse = 0;
-	}
-	if (current.spiesScroll == 654430032 && !current.isLoading && current.spiesHouse == 1)
-	{
-		current.dontLoad = 1;
-	}
 	if (current.midSpeech)
 	{	
 		current.dontLoad = 1;
@@ -41,7 +27,7 @@ isLoading
 	{
 		current.dontLoad = 0;
 	}
-	if (!current.isLoading && !current.gamePaused && current.spiesScroll != 654430032)
+	if (!current.isLoading && !current.gamePaused)
 	{
 		current.dontLoad = 0;
 	}
