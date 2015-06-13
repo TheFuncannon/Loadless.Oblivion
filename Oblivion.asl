@@ -5,6 +5,8 @@ state("Oblivion")
 	bool gamePaused : "Oblivion.exe", 0x07480BC;
 	bool midSpeech : "Oblivion.exe", 0x06E4C08;
 	bool isWaiting : "Oblivion.exe", 0x6BE410;
+	uint spiesScroll : "Oblivion.exe", 0x6EA094;
+	uint spiesScroll2 : "Oblivion.exe", 0x6DB898;
 }
 start
 {
@@ -14,7 +16,7 @@ start
 isLoading
 {
 	bool b = (current.isLoading && current.notTalking && current.dontLoad == 0) || current.isWaiting;
-	if (current.midSpeech)
+	if (current.midSpeech || (current.spiesScroll == 1 && current.spiesScroll2 == 654430032))
 	{	
 		current.dontLoad = 1;
 		current.mapTravel = 0;
