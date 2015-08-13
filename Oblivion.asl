@@ -12,6 +12,8 @@ start
 {
 	current.dontLoad = 0;
 	current.mapTravel = 0;
+	current.guardWarp = 0;
+	current.guardWarp2 = 0;
 }
 isLoading
 {
@@ -20,16 +22,24 @@ isLoading
 	{	
 		current.dontLoad = 1;
 		current.mapTravel = 0;
+		current.guardWarp2 = 0;
+
 	}
 	if (current.isLoading && current.gamePaused && current.dontLoad == 1)
 	{
 		current.mapTravel = 1;
+		current.guardWarp = 1;
 	}
-	if (current.mapTravel == 1 && current.gamePaused && !current.isLoading || (current.notTalking && !current.isLoading && current.dontLoad == 1))
+	if ((!current.isLoading && !current.gamePaused) || (current.gamePaused && !current.isLoading && current.mapTravel == 1))
 	{
 		current.dontLoad = 0;
+		current.guardWarp = 0;
 	}
-	if (!current.isLoading && !current.gamePaused)
+	if (current.guardWarp == 1 && !current.gamePaused)
+	{
+		current.guardWarp2 = 1;
+	}
+	if (current.guardWarp2 == 1 && current.isLoading && current.gamePaused)
 	{
 		current.dontLoad = 0;
 	}
