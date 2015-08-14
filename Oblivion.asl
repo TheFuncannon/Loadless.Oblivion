@@ -18,7 +18,7 @@ start
 isLoading
 {
 	bool b = (current.isLoading && current.notTalking && current.dontLoad == 0) || current.isWaiting;
-	if (current.midSpeech || (current.spiesScroll == 1 && current.spiesScroll2 == 654430032))
+	if (current.midSpeech)
 	{	
 		current.dontLoad = 1;
 		current.mapTravel = 0;
