@@ -24,8 +24,8 @@ state("Oblivion", "1.2")
     // size 8409088
 
     // Puri's vars
-    bool isLoadingScreen : 0x3CD4B0, 0x8, 0xEC;
-    byte isWaiting : 0x172DCC, 0x10;
+    // bool isLoadingScreen : 0x3CD4B0, 0x8, 0xEC;
+    // byte isWaiting : 0x172DCC, 0x10;
     // byte startingPrompt : 0x73BD60, 0x48, 0xC8, 0xB8, 0xDC;
 
     // TFC's vars
@@ -33,6 +33,10 @@ state("Oblivion", "1.2")
     // bool notTalking : 0x72D91C;
     // bool notPaused : 0x73341C;
     // bool isWaiting : 0x712DE0;
+
+    // FDH's vars
+    int isLoadingScreen : 0x00738C9C, 0x28C;
+    bool isWaiting : 0x712DE0;
 }
 
 init
@@ -97,7 +101,11 @@ update
             vars.dontLoad = false;
         }
     } else {
-        vars.isLoading = current.isLoadingScreen || current.isWaiting != 0;
+        // for FromDarkHell's vars
+        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true;
+        
+        // for Puri's vars
+        // vars.isLoading = current.isLoadingScreen || current.isWaiting != 0;
 
         // for TFC's vars
         // if (current.isLoadingScreen && !current.notTalking) {
