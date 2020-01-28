@@ -8,10 +8,8 @@ state("Oblivion", "1.0")
     // TES 4: Oblivion, original version
     // version 1.0.228
     // size 7704576
-    bool isLoadingScreen: "Oblivion.exe", 0x6BE428;
-    bool mainMenu: "Oblivion.exe", 0x6E63E8;
-    bool mainMenu2: "Oblivion.exe", 0x74F594;
-    bool quitOuts: "Oblivion.exe", 0x6D6F88;
+    int isLoadingScreen: "Oblivion.exe", 0x006D7AAC, 0x4FC, 0x2C, 0x10C, 0x4, 0x4;
+    bool quickLoad: "Oblivion.exe", 0x6BE428;
     bool isWaiting:"Oblivion.exe", 0x6BE410;
 
 }
@@ -35,6 +33,7 @@ state("Oblivion", "1.2")
 
     // FDH's vars
     int isLoadingScreen : 0x00738C9C, 0x28C;
+    bool quickLoad : 0x712DF8;
     bool isWaiting : 0x712DE0;
 }
 
@@ -51,10 +50,6 @@ init
 
     vars.prevPhase = timer.CurrentPhase;
     vars.isLoading = false;
-    vars.dontLoad = false;
-    vars.mapTravel = false;
-    vars.guardWarp = false;
-    vars.guardWarp2 = false;
 }
 
 exit
@@ -69,19 +64,13 @@ update
         return;
     }
 
-    if (timer.CurrentPhase == TimerPhase.Running && vars.prevPhase == TimerPhase.NotRunning) {
-        vars.dontLoad = false;
-        vars.mapTravel = false;
-        vars.guardWarp = false;
-        vars.guardWarp2 = false;
-    }
-
     if (version == "1.0") {
-        vars.isLoading = (current.isLoadingScreen || current.quitOuts || (current.mainMenu && current.mainMenu2)) || current.isWaiting;     
+        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
+
         
     } else {
         // for FromDarkHell's vars
-        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true;
+        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
         
         // for Puri's vars
         // vars.isLoading = current.isLoadingScreen || current.isWaiting != 0;
