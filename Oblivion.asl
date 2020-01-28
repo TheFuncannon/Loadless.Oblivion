@@ -9,10 +9,10 @@ state("Oblivion", "1.0")
     // version 1.0.228
     // size 7704576
     bool isLoadingScreen: "Oblivion.exe", 0x6BE428;
-	bool mainMenu: "Oblivion.exe", 0x6E63E8;
-	bool mainMenu2: "Oblivion.exe", 0x74F594;
-	bool quitOuts: "Oblivion.exe", 0x6D6F88;
-	bool isWaiting:"Oblivion.exe", 0x6BE410;
+    bool mainMenu: "Oblivion.exe", 0x6E63E8;
+    bool mainMenu2: "Oblivion.exe", 0x74F594;
+    bool quitOuts: "Oblivion.exe", 0x6D6F88;
+    bool isWaiting:"Oblivion.exe", 0x6BE410;
 
 }
 
