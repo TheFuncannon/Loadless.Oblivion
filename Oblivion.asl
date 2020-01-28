@@ -8,7 +8,7 @@ state("Oblivion", "1.0")
     // TES 4: Oblivion, original version
     // version 1.0.228
     // size 7704576
-    int isLoadingScreen: "Oblivion.exe", 0x006D7AAC, 0x4FC, 0x2C, 0x10C, 0x4, 0x4;
+    int isLoadingScreen: "Oblivion.exe", 0x006D7AAC, 0x10C, 0x1C, 0x0, 0x1F4, 0x4;
     bool quickLoad: "Oblivion.exe", 0x6BE428;
     bool isWaiting:"Oblivion.exe", 0x6BE410;
 
