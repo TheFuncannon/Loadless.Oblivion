@@ -8,13 +8,12 @@ state("Oblivion", "1.0")
     // TES 4: Oblivion, original version
     // version 1.0.228
     // size 7704576
-    bool isLoadingScreen : 0x74F594;
-    bool notTalking : 0x6D25A0;
-    bool gamePaused : 0x7480BC;
-    bool midSpeech : 0x6E4C08;
-    bool isWaiting : 0x6BE410;
-    // uint spiesScroll : 0x6EA094;
-    // uint spiesScroll2 : 0x6DB898;
+    bool isLoadingScreen: "Oblivion.exe", 0x6BE428;
+	bool mainMenu: "Oblivion.exe", 0x6E63E8;
+	bool mainMenu2: "Oblivion.exe", 0x74F594;
+	bool quitOuts: "Oblivion.exe", 0x6D6F88;
+	bool isWaiting:"Oblivion.exe", 0x6BE410;
+
 }
 
 state("Oblivion", "1.2")
@@ -78,28 +77,8 @@ update
     }
 
     if (version == "1.0") {
-        vars.isLoading = (current.isLoadingScreen && current.notTalking && !vars.dontLoad) || current.isWaiting;
-
-        // load pointer breaks when you start a conversation
-        if (current.midSpeech) {
-            vars.dontLoad = true;
-            vars.mapTravel = false;
-            vars.guardWarp2 = false;
-        }
-        if (current.isLoadingScreen && current.gamePaused && vars.dontLoad) {
-            vars.mapTravel = true;
-            vars.guardWarp = true;
-        }
-        if ((!current.isLoadingScreen && !current.gamePaused) || (current.gamePaused && !current.isLoadingScreen && vars.mapTravel)) {
-            vars.dontLoad = false;
-            vars.guardWarp = false;
-        }
-        if (vars.guardWarp && !current.gamePaused) {
-            vars.guardWarp2 = true;
-        }
-        if (vars.guardWarp2 && current.isLoadingScreen && current.gamePaused) {
-            vars.dontLoad = false;
-        }
+        vars.isLoading = (current.isLoadingScreen || current.quitOuts || (current.mainMenu && current.mainMenu2)) || current.isWaiting;     
+        
     } else {
         // for FromDarkHell's vars
         vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true;
