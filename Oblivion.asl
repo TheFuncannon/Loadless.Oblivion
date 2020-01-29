@@ -1,3 +1,24 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@TheFuncannon 
+TheFuncannon
+/
+Loadless.Oblivion
+1
+12
+ Code Issues 0 Pull requests 0 Actions Projects 0 Wiki Security Insights Settings
+Loadless.Oblivion/Oblivion.asl
+@FromDarkHell FromDarkHell Update Oblivion.asl
+5c91009 2 days ago
+@TheFuncannon@FromDarkHell@drtchops
+132 lines (116 sloc)  3.57 KB
+  
 state("Oblivion")
 {
     // TES 4: Oblivion, unknown version
@@ -13,9 +34,8 @@ state("Oblivion", "1.0")
     bool gamePaused : 0x7480BC;
     bool midSpeech : 0x6E4C08;
     bool isWaiting : 0x6BE410;
-    bool quickLoad: "Oblivion.exe", 0x6BE428;
-    bool isWaiting:"Oblivion.exe", 0x6BE410;
-
+    // uint spiesScroll : 0x6EA094;
+    // uint spiesScroll2 : 0x6DB898;
 }
 
 state("Oblivion", "1.2")
@@ -37,7 +57,6 @@ state("Oblivion", "1.2")
 
     // FDH's vars
     int isLoadingScreen : 0x00738C9C, 0x28C;
-    bool quickLoad : 0x712DF8;
     bool isWaiting : 0x712DE0;
 }
 
@@ -54,6 +73,10 @@ init
 
     vars.prevPhase = timer.CurrentPhase;
     vars.isLoading = false;
+    vars.dontLoad = false;
+    vars.mapTravel = false;
+    vars.guardWarp = false;
+    vars.guardWarp2 = false;
 }
 
 exit
@@ -68,8 +91,15 @@ update
         return;
     }
 
+    if (timer.CurrentPhase == TimerPhase.Running && vars.prevPhase == TimerPhase.NotRunning) {
+        vars.dontLoad = false;
+        vars.mapTravel = false;
+        vars.guardWarp = false;
+        vars.guardWarp2 = false;
+    }
+
     if (version == "1.0") {
-    vars.isLoading = (current.isLoadingScreen && current.notTalking && !vars.dontLoad) || current.isWaiting;
+        vars.isLoading = (current.isLoadingScreen && current.notTalking && !vars.dontLoad) || current.isWaiting || current.quickLoad;
 
         // load pointer breaks when you start a conversation
         if (current.midSpeech) {
@@ -91,12 +121,9 @@ update
         if (vars.guardWarp2 && current.isLoadingScreen && current.gamePaused) {
             vars.dontLoad = false;
         }
-        vars.isLoading = (current.isLoadingScreen && current.notTalking && !vars.dontLoad) || current.isWaiting || current.quickLoad;
-
-        
     } else {
         // for FromDarkHell's vars
-        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
+        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true;
         
         // for Puri's vars
         // vars.isLoading = current.isLoadingScreen || current.isWaiting != 0;
@@ -124,3 +151,4 @@ isLoading
 {
     return vars.isLoading;
 }
+
