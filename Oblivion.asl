@@ -65,13 +65,9 @@ update
         return;
     }
 
-    if (version == "1.0") {
-        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
-    } else {
-        // for FromDarkHell's vars
-        vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
-    }
-
+    // for FromDarkHell's vars
+    vars.isLoading = current.isLoadingScreen == 3 || current.isWaiting == true || current.quickLoad == true;
+    
     vars.prevPhase = timer.CurrentPhase;
 }
 
